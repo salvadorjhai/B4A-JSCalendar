@@ -1,0 +1,114 @@
+﻿Version=7.3
+NumberOfModules=3
+Module1=Starter
+Module2=CalendarView
+Module3=Calendar
+Build1=Default,b4a.example
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="19"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~'End of default text.~\n~
+IconFile=
+NumberOfFiles=0
+NumberOfLibraries=5
+Library1=core
+Library2=dateutils
+Library3=stringfunctions
+Library4=javaobject
+Library5=jscalendar
+@EndOfDesignText@
+#Region  Project Attributes 
+	#ApplicationLabel: Calendar Sample
+	#VersionCode: 1
+	#VersionName: 
+	'SupportedOrientations possible values: unspecified, landscape or portrait.
+	#SupportedOrientations: unspecified
+	#CanInstallToExternalStorage: False
+#End Region
+
+#Region  Activity Attributes 
+	#FullScreen: False
+	#IncludeTitle: True
+#End Region
+
+Sub Process_Globals
+	'These global variables will be declared once when the application starts.
+	'These variables can be accessed from all modules.
+
+End Sub
+
+Sub Globals
+	'These global variables will be redeclared each time the activity is created.
+	'These variables can only be accessed from this module.
+	Dim CV As CalendarView
+End Sub
+
+Sub Activity_Create(FirstTime As Boolean)
+	'Do not forget to load the layout file created with the visual designer. For example:
+	'Activity.LoadLayout("Layout1")
+
+	Dim W As Int = Activity.Width / 2
+	Dim btnPrev As Button
+	btnPrev.Initialize("btnPrev")
+	Activity.AddView(btnPrev,0dip, 0dip, W, 50dip)
+	btnPrev.Text = "Previous"
+	'
+	Dim btnNext As Button
+	btnNext.Initialize("btnNext")
+	Activity.AddView(btnNext, W, 0dip, W, 50dip)
+	btnNext.Text = "Next"
+	'
+	Dim p As Panel
+	p.Initialize("")
+	Activity.AddView(p, 0dip, btnNext.Height, 100%x, (Activity.Height - btnNext.Height) / 2)
+	
+	'
+	CV.Initialize(Me, "calendar")
+	CV.FormatHeaderMonth = "MMMM yyyy"
+'	CV.CalendarMonthItemColor = Colors.Transparent
+'	CV.CalendarMonthItemAlternateColor = Colors.LightGray
+'	CV.HighlightCurrentDateColor = Colors.Blue
+	CV.Build(p)
+	'
+End Sub
+
+Sub Activity_Resume
+
+End Sub
+
+Sub Activity_Pause (UserClosed As Boolean)
+
+End Sub
+
+ 
+Sub btnPrev_Click
+	CV.MovePreviousMonth
+End Sub
+
+Sub btnNext_Click
+	CV.MoveNextMonth
+End Sub
+ 
+Sub calendar_onDateClick(data As calendarItem)
+	ToastMessageShow(data.date, False)
+End Sub
+
+Sub calendar_onDateLongClick(data As calendarItem)
+	ToastMessageShow(data.date, False)
+	data.panel.Color = Colors.Magenta
+End Sub
+
+Sub calendar_onDrawWeekdays(label As Label)
+	Dim bg As GradientDrawable
+	bg.Initialize("TOP_BOTTOM", Array As Int(0xFF4B6CB7, 0xFF182848))
+	label.Background = bg
+	label.Text = label.Text.SubString2(0,3)
+	label.TextColor = Colors.White
+	label.Typeface = Typeface.CreateNew(Typeface.DEFAULT_BOLD, Typeface.STYLE_BOLD_ITALIC)
+End Sub
+
+Sub calendar_onDrawCalendarItem(data As calendarItem)
+	
+End Sub
+
+Sub calendar_onDrawMonth(label As Label)
+	label.Typeface = Typeface.CreateNew(Typeface.DEFAULT_BOLD, Typeface.STYLE_BOLD_ITALIC)
+	label.TextSize = 18
+End Sub

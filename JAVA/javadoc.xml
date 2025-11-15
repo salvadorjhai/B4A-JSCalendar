@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="public" additionalparam="-b4atarget &quot;D:\Projects\Android\CustomLibs\JSCalendar\JSCalendar.xml&quot;" classpath="D:\android\sdk\platforms\android-11\android.jar;C:\Basic4android\7.30\Libraries\Core.jar;C:\Basic4android\7.30\Libraries\B4AShared.jar" packagenames="com.salvadorjhai.utils" sourcepath="src">
+            <doclet name="BADoclet" path="D:\Projects\Android\CustomLibs\DOCLET"/>
+        </javadoc>
+    </target>
+</project>
